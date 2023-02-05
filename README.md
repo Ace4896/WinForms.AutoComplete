@@ -7,3 +7,7 @@ This implementation is a slimmed down version of [Serge Weinstock's implementati
 - Updated for .NET 6.0
 - `StartsWith`, `Contains` and `Regex` matching methods
 - No bold highlighting on matched segments
+
+## License
+
+Serge Weinstock's original implementation and this modified implementation are licensed under the [LGPLv3](./LICENSE).
