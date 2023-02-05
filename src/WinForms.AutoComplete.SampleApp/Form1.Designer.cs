@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBoxNoWildcards = new WinForms.AutoComplete.Controls.EasyCompletionComboBox();
-            this.comboBoxUseWildcards = new WinForms.AutoComplete.Controls.EasyCompletionComboBox();
-            this.comboBoxRegex = new WinForms.AutoComplete.Controls.EasyCompletionComboBox();
+            this.comboBoxNoWildcards = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
+            this.comboBoxUseWildcards = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
+            this.comboBoxRegex = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -143,9 +143,9 @@
         }
 
         #endregion
-        private Controls.EasyCompletionComboBox comboBoxNoWildcards;
-        private Controls.EasyCompletionComboBox comboBoxUseWildcards;
-        private Controls.EasyCompletionComboBox comboBoxRegex;
+        private Controls.AutoCompleteComboBox comboBoxNoWildcards;
+        private Controls.AutoCompleteComboBox comboBoxUseWildcards;
+        private Controls.AutoCompleteComboBox comboBoxRegex;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
