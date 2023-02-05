@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace WinForms.AutoComplete.Controls;
@@ -8,7 +9,7 @@ namespace WinForms.AutoComplete.Controls;
 /// <summary>
 /// A custom <see cref="ComboBox"/> with more auto-complete methods.
 /// </summary>
-/// <remarks>This is a refactored version of <see href="https://www.codeproject.com/Tips/755707/ComboBox-with-Suggestions-Based-on-Loose-Character"><c>EasyCompleteComboBox</c></see>.</remarks>
+/// <remarks>This is a slimmed down version of <see href="https://www.codeproject.com/Tips/755707/ComboBox-with-Suggestions-Based-on-Loose-Character"><c>EasyCompleteComboBox</c></see>.</remarks>
 public class AutoCompleteComboBox : ComboBox
 {
     #region Private Members
@@ -17,7 +18,6 @@ public class AutoCompleteComboBox : ComboBox
 
     private readonly AutoCompleteDropdown _dropDown;    // Custom dropdown control
     private readonly ListBox _suggestionList;           // Suggestion list inside the dropdown control
-    private Font _boldFont;                             // Bold font used for displaying matches
     private bool _fromKeyboard;                         // Whether the last change was from the keyboard
 
     #endregion
@@ -25,7 +25,7 @@ public class AutoCompleteComboBox : ComboBox
     #region New Properties
 
     [
-        DefaultValue(StringMatchingMethod.NoWildcards),
+        DefaultValue(StringMatchingMethod.Contains),
         Description("How strings are matched against the user input"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
@@ -118,7 +118,7 @@ public class AutoCompleteComboBox : ComboBox
 
     public AutoCompleteComboBox()
     {
-        _matchingMethod = StringMatchingMethod.NoWildcards;
+        _matchingMethod = StringMatchingMethod.Contains;
 
         // we're overriding these
         DropDownStyle = ComboBoxStyle.DropDown;
@@ -140,7 +140,6 @@ public class AutoCompleteComboBox : ComboBox
         _suggestionList.MouseMove += OnSuggestionListMouseMove;
         _dropDown = new AutoCompleteDropdown(_suggestionList);
 
-        _boldFont = new Font(Font, FontStyle.Bold);
         FontChanged += OnFontChanged;
         OnFontChanged(null, EventArgs.Empty);
     }
@@ -152,12 +151,42 @@ public class AutoCompleteComboBox : ComboBox
     {
         if (disposing)
         {
-            _boldFont.Dispose();
             _dropDown.Dispose();
         }
 
         base.Dispose(disposing);
     }
+
+    #region String Matching
+
+    private bool IsMatch(string source, string pattern)
+    {
+        switch (MatchingMethod)
+        {
+            case StringMatchingMethod.StartsWith:
+                return source.StartsWith(pattern, StringComparison.InvariantCultureIgnoreCase);
+
+            case StringMatchingMethod.Contains:
+                return source.Contains(pattern, StringComparison.InvariantCultureIgnoreCase);
+
+            case StringMatchingMethod.Regex:
+                try
+                {
+                    Regex regex = new(pattern, RegexOptions.IgnoreCase);
+                    return regex.IsMatch(source);
+                }
+                catch
+                {
+                    // Invalid regex pattern; don't match
+                    return false;
+                }
+
+            default:
+                return false;
+        }
+    }
+
+    #endregion
 
     #region Size and Position of Suggestion ListBox
 
@@ -259,8 +288,7 @@ public class AutoCompleteComboBox : ComboBox
     private void OnSuggestionListClick(object? sender, EventArgs e)
     {
         _fromKeyboard = false;
-        StringMatch sel = (StringMatch)_suggestionList.SelectedItem;
-        Text = sel.Text;
+        Text = _suggestionList.Text;
         Select(0, Text.Length);
         Focus();
     }
@@ -369,23 +397,24 @@ public class AutoCompleteComboBox : ComboBox
 
         _suggestionList.BeginUpdate();
         _suggestionList.Items.Clear();
-        StringMatcher matcher = new StringMatcher(MatchingMethod, Text);
+
+        string pattern = Text;
         foreach (object item in Items)
         {
-            StringMatch sm = matcher.Match(GetItemText(item));
-            if (sm != null)
+            string itemText = GetItemText(item);
+            if (IsMatch(itemText, pattern))
             {
-                _suggestionList.Items.Add(sm);
+                _suggestionList.Items.Add(itemText);
             }
         }
+
         _suggestionList.EndUpdate();
 
         bool visible = _suggestionList.Items.Count != 0;
 
-        if (_suggestionList.Items.Count == 1 && ((StringMatch)_suggestionList.Items[0]).Text.Length == Text.Trim().Length)
+        if (_suggestionList.Items.Count == 1 && ((string)_suggestionList.Items[0]).Length == Text.Trim().Length)
         {
-            StringMatch sel = (StringMatch)_suggestionList.Items[0];
-            Text = sel.Text;
+            Text = (string)_suggestionList.Items[0];
             Select(0, Text.Length);
             visible = false;
         }
@@ -423,11 +452,8 @@ public class AutoCompleteComboBox : ComboBox
     /// </summary>
     private void OnFontChanged(object? sender, EventArgs e)
     {
-        _boldFont.Dispose();
-        _boldFont = new Font(Font, FontStyle.Bold);
-
         _suggestionList.Font = Font;
-        _suggestionList.ItemHeight = _boldFont.Height + 2;
+        _suggestionList.ItemHeight = Font.Height + 2;
     }
 
     /// <summary>
@@ -435,8 +461,6 @@ public class AutoCompleteComboBox : ComboBox
     /// </summary>
     private static void DrawString(Graphics g, Color color, ref Rectangle rect, string text, Font font)
     {
-        // TODO: See if this can be converted to use spans
-
         Size proposedSize = new Size(int.MaxValue, int.MaxValue);
         Size sz = TextRenderer.MeasureText(g, text, font, proposedSize, TextFormatFlags.NoPadding);
         TextRenderer.DrawText(g, text, font, rect, color, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
@@ -449,19 +473,11 @@ public class AutoCompleteComboBox : ComboBox
     /// </summary>
     private void OnSuggestionListDrawItem(object? sender, DrawItemEventArgs e)
     {
-        StringMatch sm = (StringMatch)_suggestionList.Items[e.Index];
-
         e.DrawBackground();
 
-        bool isBold = sm.StartsOnMatch;
+        string text = (string)_suggestionList.Items[e.Index];
         Rectangle rBounds = e.Bounds;
-
-        foreach (string s in sm.Segments)
-        {
-            Font f = isBold ? _boldFont : Font;
-            DrawString(e.Graphics, e.ForeColor, ref rBounds, s, f);
-            isBold = !isBold;
-        }
+        DrawString(e.Graphics, e.ForeColor, ref rBounds, text, Font);
 
         e.DrawFocusRectangle();
     }

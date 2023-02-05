@@ -1,11 +1,11 @@
 ﻿namespace WinForms.AutoComplete;
 
 /// <summary>
-/// Represents the different ways in which a string can be matched using <see cref="StringMatcher"/>.
+/// Represents the different methods for matching a string in <see cref="Controls.AutoCompleteComboBox"/>.
 /// </summary>
 public enum StringMatchingMethod
 {
-    NoWildcards,
-    UseWildcards,
-    UseRegexs,
+    StartsWith,
+    Contains,
+    Regex,
 }

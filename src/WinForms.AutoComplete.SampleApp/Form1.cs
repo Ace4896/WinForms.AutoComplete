@@ -23,14 +23,14 @@ namespace WinForms.AutoComplete.SampleApp
 
         private void Form1_Load(object? sender, System.EventArgs e)
         {
-            comboBoxNoWildcards.Items.AddRange(_items);
-            comboBoxNoWildcards.MatchingMethod = StringMatchingMethod.NoWildcards;
+            comboBoxStartsWith.Items.AddRange(_items);
+            comboBoxStartsWith.MatchingMethod = StringMatchingMethod.StartsWith;
 
-            comboBoxUseWildcards.Items.AddRange(_items);
-            comboBoxUseWildcards.MatchingMethod = StringMatchingMethod.UseWildcards;
+            comboBoxContains.Items.AddRange(_items);
+            comboBoxContains.MatchingMethod = StringMatchingMethod.Contains;
 
             comboBoxRegex.Items.AddRange(_items);
-            comboBoxRegex.MatchingMethod = StringMatchingMethod.UseRegexs;
+            comboBoxRegex.MatchingMethod = StringMatchingMethod.Regex;
 
             listBoxAvailableItems.Items.AddRange(_items);
         }

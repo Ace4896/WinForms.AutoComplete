@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBoxNoWildcards = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
-            this.comboBoxUseWildcards = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
+            this.comboBoxStartsWith = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
+            this.comboBoxContains = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
             this.comboBoxRegex = new WinForms.AutoComplete.Controls.AutoCompleteComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,28 +39,27 @@
             this.listBoxAvailableItems = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
-            // comboBoxNoWildcards
+            // comboBoxStartsWith
             // 
-            this.comboBoxNoWildcards.FormattingEnabled = true;
-            this.comboBoxNoWildcards.Location = new System.Drawing.Point(123, 69);
-            this.comboBoxNoWildcards.Name = "comboBoxNoWildcards";
-            this.comboBoxNoWildcards.Size = new System.Drawing.Size(94, 23);
-            this.comboBoxNoWildcards.TabIndex = 10;
+            this.comboBoxStartsWith.FormattingEnabled = true;
+            this.comboBoxStartsWith.Location = new System.Drawing.Point(123, 69);
+            this.comboBoxStartsWith.Name = "comboBoxStartsWith";
+            this.comboBoxStartsWith.Size = new System.Drawing.Size(94, 23);
+            this.comboBoxStartsWith.TabIndex = 10;
             // 
-            // comboBoxUseWildcards
+            // comboBoxContains
             // 
-            this.comboBoxUseWildcards.FormattingEnabled = true;
-            this.comboBoxUseWildcards.Location = new System.Drawing.Point(123, 98);
-            this.comboBoxUseWildcards.MatchingMethod = WinForms.AutoComplete.StringMatchingMethod.UseWildcards;
-            this.comboBoxUseWildcards.Name = "comboBoxUseWildcards";
-            this.comboBoxUseWildcards.Size = new System.Drawing.Size(94, 23);
-            this.comboBoxUseWildcards.TabIndex = 11;
+            this.comboBoxContains.FormattingEnabled = true;
+            this.comboBoxContains.Location = new System.Drawing.Point(123, 98);
+            this.comboBoxContains.Name = "comboBoxContains";
+            this.comboBoxContains.Size = new System.Drawing.Size(94, 23);
+            this.comboBoxContains.TabIndex = 11;
             // 
             // comboBoxRegex
             // 
             this.comboBoxRegex.FormattingEnabled = true;
             this.comboBoxRegex.Location = new System.Drawing.Point(123, 127);
-            this.comboBoxRegex.MatchingMethod = WinForms.AutoComplete.StringMatchingMethod.UseRegexs;
+            this.comboBoxRegex.MatchingMethod = WinForms.AutoComplete.StringMatchingMethod.Regex;
             this.comboBoxRegex.Name = "comboBoxRegex";
             this.comboBoxRegex.Size = new System.Drawing.Size(94, 23);
             this.comboBoxRegex.TabIndex = 12;
@@ -77,20 +76,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 72);
+            this.label1.Location = new System.Drawing.Point(53, 72);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 15);
+            this.label1.Size = new System.Drawing.Size(64, 15);
             this.label1.TabIndex = 13;
-            this.label1.Text = "No Wildcards";
+            this.label1.Text = "Starts With";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 101);
+            this.label2.Location = new System.Drawing.Point(63, 101);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(97, 15);
+            this.label2.Size = new System.Drawing.Size(54, 15);
             this.label2.TabIndex = 14;
-            this.label2.Text = "Use Wildcards (*)";
+            this.label2.Text = "Contains";
             // 
             // tableLayoutPanel4
             // 
@@ -129,9 +128,9 @@
             this.ClientSize = new System.Drawing.Size(472, 228);
             this.Controls.Add(this.listBoxAvailableItems);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBoxUseWildcards);
+            this.Controls.Add(this.comboBoxContains);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBoxNoWildcards);
+            this.Controls.Add(this.comboBoxStartsWith);
             this.Controls.Add(this.comboBoxRegex);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
@@ -143,8 +142,8 @@
         }
 
         #endregion
-        private Controls.AutoCompleteComboBox comboBoxNoWildcards;
-        private Controls.AutoCompleteComboBox comboBoxUseWildcards;
+        private Controls.AutoCompleteComboBox comboBoxStartsWith;
+        private Controls.AutoCompleteComboBox comboBoxContains;
         private Controls.AutoCompleteComboBox comboBoxRegex;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
