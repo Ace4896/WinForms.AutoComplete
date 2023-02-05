@@ -157,37 +157,6 @@ public class AutoCompleteComboBox : ComboBox
         base.Dispose(disposing);
     }
 
-    #region String Matching
-
-    private bool IsMatch(string source, string pattern)
-    {
-        switch (MatchingMethod)
-        {
-            case StringMatchingMethod.StartsWith:
-                return source.StartsWith(pattern, StringComparison.InvariantCultureIgnoreCase);
-
-            case StringMatchingMethod.Contains:
-                return source.Contains(pattern, StringComparison.InvariantCultureIgnoreCase);
-
-            case StringMatchingMethod.Regex:
-                try
-                {
-                    Regex regex = new(pattern, RegexOptions.IgnoreCase);
-                    return regex.IsMatch(source);
-                }
-                catch
-                {
-                    // Invalid regex pattern; don't match
-                    return false;
-                }
-
-            default:
-                return false;
-        }
-    }
-
-    #endregion
-
     #region Size and Position of Suggestion ListBox
 
     /// <summary>
@@ -398,11 +367,11 @@ public class AutoCompleteComboBox : ComboBox
         _suggestionList.BeginUpdate();
         _suggestionList.Items.Clear();
 
-        string pattern = Text;
+        StringMatcher matcher = new(Text, MatchingMethod);
         foreach (object item in Items)
         {
             string itemText = GetItemText(item);
-            if (IsMatch(itemText, pattern))
+            if (matcher.IsMatch(itemText))
             {
                 _suggestionList.Items.Add(itemText);
             }
