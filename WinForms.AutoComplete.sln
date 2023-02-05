@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7817B7DE-3109-4C5D-B210-BC01AE4F45BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms.AutoComplete", "src\WinForms.AutoComplete\WinForms.AutoComplete.csproj", "{7646A96F-6B3C-479A-A3F2-DBE563428F2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms.AutoComplete.SampleApp", "src\WinForms.AutoComplete.SampleApp\WinForms.AutoComplete.SampleApp.csproj", "{28442394-D18A-4893-97CB-0DF7CF5A7745}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82197382-947B-4483-81E7-5CE7EAB9B6CE}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7646A96F-6B3C-479A-A3F2-DBE563428F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7646A96F-6B3C-479A-A3F2-DBE563428F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7646A96F-6B3C-479A-A3F2-DBE563428F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7646A96F-6B3C-479A-A3F2-DBE563428F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28442394-D18A-4893-97CB-0DF7CF5A7745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28442394-D18A-4893-97CB-0DF7CF5A7745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28442394-D18A-4893-97CB-0DF7CF5A7745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28442394-D18A-4893-97CB-0DF7CF5A7745}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7646A96F-6B3C-479A-A3F2-DBE563428F2A} = {7817B7DE-3109-4C5D-B210-BC01AE4F45BE}
+		{28442394-D18A-4893-97CB-0DF7CF5A7745} = {7817B7DE-3109-4C5D-B210-BC01AE4F45BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EC4D519-8B32-4CA9-BEE8-AF5117F8FC3E}
+	EndGlobalSection
+EndGlobal
