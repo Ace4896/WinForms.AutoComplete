@@ -30,7 +30,7 @@ namespace WinForms.AutoComplete.Controls
     {
         #region fields and properties
         /// <summary>our custom drowp down control</summary>
-        private readonly DropdownControl m_dropDown;
+        private readonly AutoCompleteDropdown m_dropDown;
         /// <summary>the suggestion list inside the drop down control</summary>
         private readonly ListBox m_suggestionList;
         /// <summary>the bold font used for drawing strings in the listbox</summary>
@@ -64,7 +64,7 @@ namespace WinForms.AutoComplete.Controls
             m_suggestionList.DrawItem += onSuggestionListDrawItem;
             FontChanged += onFontChanged;
             m_suggestionList.MouseMove += onSuggestionListMouseMove;
-            m_dropDown = new DropdownControl(m_suggestionList);
+            m_dropDown = new AutoCompleteDropdown(m_suggestionList);
             onFontChanged(null, null);
         }
 
